@@ -15,10 +15,35 @@ export default function ChatModal({ onClose }: ChatModalProps) {
   const [inputValue, setInputValue] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [theme, setTheme] = useState<"light" | "dark">("light")
-  const [position, setPosition] = useState({ 
-    x: window.innerWidth - 460, 
-    y: window.innerHeight - 512 - 100 
-  })
+  const getInitialPosition = () => {
+    if (typeof window === "undefined") {
+      return { x: 0, y: 0 }
+    }
+    const isMobile = window.innerWidth <= 640
+    if (isMobile) {
+      // Center on mobile
+      return { 
+        x: (window.innerWidth - 320) / 2, // assuming modal width ~320px on mobile
+        y: (window.innerHeight - 512 -70) / 2 
+      }
+    }
+    // Bottom right on desktop
+    return { 
+      x: window.innerWidth - 460, 
+      y: window.innerHeight - 512 - 100 
+    }
+  }
+
+  const [position, setPosition] = useState(getInitialPosition)
+
+  // Update position on resize for responsiveness
+  useEffect(() => {
+    const handleResize = () => {
+      setPosition(getInitialPosition())
+    }
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
+  }, [])
   const [dragging, setDragging] = useState(false)
   const dragOffset = useRef({ x: 0, y: 0 })
   const messagesEndRef = useRef<HTMLDivElement>(null)
