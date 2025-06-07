@@ -21,10 +21,10 @@ export default function ChatModal({ onClose }: ChatModalProps) {
     }
     const isMobile = window.innerWidth <= 640
     if (isMobile) {
-      // Center on mobile
+      // Center horizontally on mobile, keep y at bottom
       return { 
-        x: (window.innerWidth - 320) / 2, // assuming modal width ~320px on mobile
-        y: (window.innerHeight - 512 -70) / 2 
+      x: (window.innerWidth) / 2, 
+      y: window.innerHeight - 512 - 24 // 24px from bottom
       }
     }
     // Bottom right on desktop
