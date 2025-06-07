@@ -23,7 +23,7 @@ export default function ChatModal({ onClose }: ChatModalProps) {
     if (isMobile) {
       // Center horizontally on mobile, keep y at bottom
       return { 
-      x: (window.innerWidth) / 2, 
+      x: (window.innerWidth - 360) / 2, 
       y: window.innerHeight - 512 - 24 // 24px from bottom
       }
     }
